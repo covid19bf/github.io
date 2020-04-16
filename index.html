@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <div>
+    <img src="https://zupimages.net/up/20/16/2y6t.png" border="0" style="position:absolute;bottom:0;left:80%;z-index:2;"width="200" height="160" />
+        </div>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Cas confirmés du 05/04/2020 au 14/04/2020</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/Region_BF_1.js"></script>
+        <script src="data/Commune_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:5
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('       <a href="https://www.ebonnet.net">Réalisation: Emmanuel BONNET, Ibrahim SANA </a>;<a href="https://github.com/tomchadwin/qgis2web" target="_blank">   qgis2web     </a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        var layer_OpenStreetMap_0 = L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 5,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        function pop_Region_BF_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Num region</strong><br />' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Nom region</strong><br />' + (feature.properties['NAME_0'] !== null ? Autolinker.link(feature.properties['NAME_0'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Code region</strong><br />' + (feature.properties['CODE'] !== null ? Autolinker.link(feature.properties['CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Region_BF_1_0() {
+            return {
+                pane: 'pane_Region_BF_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Region_BF_1');
+        map.getPane('pane_Region_BF_1').style.zIndex = 401;
+        map.getPane('pane_Region_BF_1').style['mix-blend-mode'] = 'normal';
+        var layer_Region_BF_1 = new L.geoJson(json_Region_BF_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Region_BF_1',
+            layerName: 'layer_Region_BF_1',
+            pane: 'pane_Region_BF_1',
+            onEachFeature: pop_Region_BF_1,
+            style: style_Region_BF_1_0,
+        });
+        bounds_group.addLayer(layer_Region_BF_1);
+        map.addLayer(layer_Region_BF_1);
+        function pop_Commune_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Ville</strong><br />' + (feature.properties['Ville'] !== null ? Autolinker.link(feature.properties['Ville'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Cas confirmés</strong><br />' + (feature.properties['Cas'] !== null ? Autolinker.link(feature.properties['Cas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Date_</strong><br />' + (feature.properties['Date_'] !== null ? Autolinker.link(feature.properties['Date_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Date</strong><br />' + (feature.properties['Date'] !== null ? Autolinker.link(feature.properties['Date'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+        function style_Commune_2_0(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            // Start of if blocks and style check logic
+            if (exp_Commune_2rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 1.4,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule1_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 3.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule2_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule3_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 7.2,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule4_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 9.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule5_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 16.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule6_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 20.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule7_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 22.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule8_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 24.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule9_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 26.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule10_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 28.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule11_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 38.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule12_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 43.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule13_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 45.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule14_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 47.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule15_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 49.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule16_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 52.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule17_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 49.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_Commune_2rule18_eval_expression(context)) {
+                  return {
+                pane: 'pane_Commune_2',
+                radius: 56.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,20,20,1.0)',
+                interactive: true,
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        map.createPane('pane_Commune_2');
+        map.getPane('pane_Commune_2').style.zIndex = 402;
+        map.getPane('pane_Commune_2').style['mix-blend-mode'] = 'normal';
+        var layer_Commune_2 = new L.geoJson(json_Commune_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Commune_2',
+            layerName: 'layer_Commune_2',
+            pane: 'pane_Commune_2',
+            onEachFeature: pop_Commune_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Commune_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Commune_2);
+        map.addLayer(layer_Commune_2);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Cas confirmés du 05/04/2020 au 14/04/2020</h2>';
+            };
+            title.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Commune<br /><table><tr><td style="text-align: center;"><img src="legend/Commune_2_10.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_31.png" /></td><td>3</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_52.png" /></td><td>5</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_73.png" /></td><td>7</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_94.png" /></td><td>9</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_355.png" /></td><td>35</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_406.png" /></td><td>40</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_457.png" /></td><td>45</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_508.png" /></td><td>50</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_559.png" /></td><td>55</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_6010.png" /></td><td>60</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_30011.png" /></td><td>300</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_35012.png" /></td><td>350</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_40013.png" /></td><td>400</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_42514.png" /></td><td>425</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_45015.png" /></td><td>450</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_50016.png" /></td><td>500</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_55017.png" /></td><td>550</td></tr><tr><td style="text-align: center;"><img src="legend/Commune_2_60018.png" /></td><td>600</td></tr></table>': layer_Commune_2,'<img src="legend/Region_BF_1.png" /> Region_BF': layer_Region_BF_1,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"Date": "date","Cas": "int","Date_": "str","Ville": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + key).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + key).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + key).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Date_date1 = document.createElement("div");
+            div_Date_date1.id = "div_Date_date1";
+            div_Date_date1.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Date_date1);
+            dat_Date_date1 = document.createElement('input');
+            dat_Date_date1.type = "text";
+            dat_Date_date1.id = "dat_Date_date1";
+            div_Date_date1.appendChild(dat_Date_date1);
+            var lab_Date_date1 = document.createElement('div');
+            lab_Date_date1.innerHTML  = 'Date from';
+            lab_Date_date1.className = 'filterlabel';
+            document.getElementById("div_Date_date1").appendChild(
+                lab_Date_date1);
+            var reset_Date_date1 = document.createElement('div');
+            reset_Date_date1.innerHTML = "clear";
+            reset_Date_date1.className = 'filterlabel';
+            reset_Date_date1.onclick = function() {
+                tail.DateTime("#dat_Date_date1", {
+                    dateStart: 1586044800000,
+                    dateEnd: 1586822400000,
+                    dateFormat: 'YYYY-mm-dd',
+                    timeFormat: false,
+                    today: false,
+                    weekStart: 1,
+                    position: "left",
+                    closeButton: true,
+                    timeStepMinutes:1,
+                    timeStepSeconds: 1
+                }).selectDate(2020,4-1,5,0,0,0);
+                tail.DateTime("#dat_Date_date1").reload()
+            }
+            document.getElementById("div_Date_date1").appendChild(
+                reset_Date_date1);
+            document.addEventListener("DOMContentLoaded", function(){
+                tail.DateTime("#dat_Date_date1", {
+                    dateStart: 1586044800000,
+                    dateEnd: 1586822400000,
+                    dateFormat: 'YYYY-mm-dd',
+                    timeFormat: false,
+                    today: false,
+                    weekStart: 1,
+                    position: "left",
+                    closeButton: true,
+                    timeStepMinutes:1,
+                    timeStepSeconds: 1
+                }).selectDate(2020,4-1,5,0,0,0);
+                tail.DateTime("#dat_Date_date1").reload()
+                tail.DateTime("#dat_Date_date2", {
+                    dateStart: 1586044800000,
+                    dateEnd: 1586822400000,
+                    dateFormat: 'YYYY-mm-dd',
+                    timeFormat: false,
+                    today: false,
+                    weekStart: 1,
+                    position: "left",
+                    closeButton: true,
+                    timeStepMinutes:1,
+                    timeStepSeconds: 1
+                }).selectDate(2020,4-1,14,0,0,0);
+                tail.DateTime("#dat_Date_date2").reload()
+                filterFunc()
+                dat_Date_date1.onchange = function(){filterFunc()};
+                dat_Date_date2.onchange = function(){filterFunc()};
+            });
+            var div_Date_date2 = document.createElement("div");
+            div_Date_date2.id = "div_Date_date2";
+            div_Date_date2.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Date_date2);
+            dat_Date_date2 = document.createElement('input');
+            dat_Date_date2.type = "text";
+            dat_Date_date2.id = "dat_Date_date2";
+            div_Date_date2.appendChild(dat_Date_date2);
+            var lab_Date_date2 = document.createElement('div');
+            lab_Date_date2.innerHTML  = 'Date till';
+            lab_Date_date2.className = 'filterlabel';
+            document.getElementById("div_Date_date2")
+              .appendChild(lab_Date_date2);
+            var reset_Date_date2 = document.createElement('div');
+            reset_Date_date2.innerHTML = "clear";
+            reset_Date_date2.className = 'filterlabel';
+            reset_Date_date2.onclick = function() {
+                tail.DateTime("#dat_Date_date2", {
+                    dateStart: 1586044800000,
+                    dateEnd: 1586822400000,
+                    dateFormat: 'YYYY-mm-dd',
+                    timeFormat: false,
+                    today: false,
+                    weekStart: 1,
+                    position: "left",
+                    closeButton: true,
+                    timeStepMinutes:1,
+                    timeStepSeconds: 1
+                }).selectDate(2020,4-1,14,0,0,0);
+                tail.DateTime("#dat_Date_date2").reload()
+            }
+            document.getElementById("div_Date_date2").appendChild(
+                reset_Date_date2);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Cas = document.createElement("div");
+            div_Cas.id = "div_Cas";
+            div_Cas.className = "slider";
+            document.getElementById("menu").appendChild(div_Cas);
+            var lab_Cas = document.createElement('div');
+            lab_Cas.innerHTML  = 'Cas: <span id="val_Cas"></span>';
+            lab_Cas.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_Cas);
+            var reset_Cas = document.createElement('div');
+            reset_Cas.innerHTML = 'clear filter';
+            reset_Cas.className = 'filterlabel';
+            lab_Cas.className = 'filterlabel';
+            reset_Cas.onclick = function() {
+                sel_Cas.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_Cas);
+            var sel_Cas = document.getElementById('div_Cas');
+            noUiSlider.create(sel_Cas, {
+                connect: true,
+                start: [0, 450],
+                step: 1,
+                format: wNumb({
+                    decimals: 0,
+                    }),
+                range: {
+                min: 0,
+                max: 450
+                }
+            });
+            sel_Cas.noUiSlider.on('update', function (values) {
+            filterVals =[];
+            for (value in values){
+            filterVals.push(parseInt(value))
+            }
+            val_Cas = document.getElementById('val_Cas');
+            val_Cas.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Date_ = document.createElement('div');
+            div_Date_.id = "div_Date_";
+            div_Date_.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Date_);
+            sel_Date_ = document.createElement('select');
+            sel_Date_.multiple = true;
+            sel_Date_.size = 9;
+            sel_Date_.id = "sel_Date_";
+            var Date__options_str = "<option value='' unselected></option>";
+            sel_Date_.onchange = function(){filterFunc()};
+            Date__options_str  += '<option value="2020-04-05">2020-04-05</option>';
+            Date__options_str  += '<option value="2020-04-07">2020-04-07</option>';
+            Date__options_str  += '<option value="2020-04-08">2020-04-08</option>';
+            Date__options_str  += '<option value="2020-04-09">2020-04-09</option>';
+            Date__options_str  += '<option value="2020-04-10">2020-04-10</option>';
+            Date__options_str  += '<option value="2020-04-11">2020-04-11</option>';
+            Date__options_str  += '<option value="2020-04-12">2020-04-12</option>';
+            Date__options_str  += '<option value="2020-04-13">2020-04-13</option>';
+            Date__options_str  += '<option value="2020-04-14">2020-04-14</option>';
+            sel_Date_.innerHTML = Date__options_str;
+            div_Date_.appendChild(sel_Date_);
+            var lab_Date_ = document.createElement('div');
+            lab_Date_.innerHTML = 'Date_';
+            lab_Date_.className = 'filterlabel';
+            div_Date_.appendChild(lab_Date_);
+            var reset_Date_ = document.createElement('div');
+            reset_Date_.innerHTML = 'clear filter';
+            reset_Date_.className = 'filterlabel';
+            reset_Date_.onclick = function() {
+                var options = document.getElementById("sel_Date_").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Date_.appendChild(reset_Date_);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Ville = document.createElement('div');
+            div_Ville.id = "div_Ville";
+            div_Ville.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Ville);
+            sel_Ville = document.createElement('select');
+            sel_Ville.multiple = true;
+            sel_Ville.size = 10;
+            sel_Ville.id = "sel_Ville";
+            var Ville_options_str = "<option value='' unselected></option>";
+            sel_Ville.onchange = function(){filterFunc()};
+            Ville_options_str  += '<option value="BANFORA">BANFORA</option>';
+            Ville_options_str  += '<option value="BOBO-DIOULASSO">BOBO-DIOULASSO</option>';
+            Ville_options_str  += '<option value="BOROMO">BOROMO</option>';
+            Ville_options_str  += '<option value="DEDOUGOU">DEDOUGOU</option>';
+            Ville_options_str  += '<option value="FALAGOUNTOU">FALAGOUNTOU</option>';
+            Ville_options_str  += '<option value="GOROM-GOROM">GOROM-GOROM</option>';
+            Ville_options_str  += '<option value="HOUNDE">HOUNDE</option>';
+            Ville_options_str  += '<option value="KONGOUSSI">KONGOUSSI</option>';
+            Ville_options_str  += '<option value="MANGA">MANGA</option>';
+            Ville_options_str  += '<option value="OUAGADOUGOU">OUAGADOUGOU</option>';
+            Ville_options_str  += '<option value="SAPONE">SAPONE</option>';
+            Ville_options_str  += '<option value="SINDOU">SINDOU</option>';
+            Ville_options_str  += '<option value="ZINIARE">ZINIARE</option>';
+            Ville_options_str  += '<option value="ZORGHO">ZORGHO</option>';
+            sel_Ville.innerHTML = Ville_options_str;
+            div_Ville.appendChild(sel_Ville);
+            var lab_Ville = document.createElement('div');
+            lab_Ville.innerHTML = 'Ville';
+            lab_Ville.className = 'filterlabel';
+            div_Ville.appendChild(lab_Ville);
+            var reset_Ville = document.createElement('div');
+            reset_Ville.innerHTML = 'clear filter';
+            reset_Ville.className = 'filterlabel';
+            reset_Ville.onclick = function() {
+                var options = document.getElementById("sel_Ville").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Ville.appendChild(reset_Ville);
+        </script>
+    </body>
+</html>
